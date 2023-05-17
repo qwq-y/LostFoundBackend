@@ -1,0 +1,35 @@
+drop table post cascade;
+drop table feedback cascade;
+
+create table user_
+(
+    id       bigint primary key,
+    password varchar,
+    type     varchar
+);
+
+create table post
+(
+    id               bigint primary key,
+    item_type        varchar,
+    item_description varchar,
+    picture          varchar,
+    publish_time     bigint,
+    claim_time       bigint,
+    rough_place      varchar,
+    detailed_place   varchar,
+    publisher_id     bigint references user_ (id),
+    claimant_id      bigint references user_ (id),
+    is_claimed      bool,
+    is_hidden        bool
+);
+
+create table feedback
+(
+    id          bigint primary key,
+    reporter_id bigint references user_ (id),
+    time        bigint,
+    body        varchar
+);
+
+
