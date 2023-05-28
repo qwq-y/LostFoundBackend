@@ -48,6 +48,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "WHERE post.item_type = :type", nativeQuery = true)
     List<Post> findPostsByExactType(@Param("type") String type);
 
-    // 
 
 }

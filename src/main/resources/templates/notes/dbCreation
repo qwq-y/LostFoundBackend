@@ -8,14 +8,10 @@ create table user_
     type     varchar
 );
 
-insert into user_
-values (12345678, 12345678, 'user');
-insert into user_
-values (11111111, 11111111, 'administrator');
-
 create table post
 (
     id               bigint primary key,
+    item_name        varchar,
     item_type        varchar,
     item_description varchar,
     picture          varchar,
@@ -29,9 +25,6 @@ create table post
     is_hidden        bool
 );
 
-insert into post
-values (1, 'food', 'apple', null, null, null, null, null, 12345678, null, false, false);
-
 create table feedback
 (
     id          bigint primary key,
@@ -39,5 +32,18 @@ create table feedback
     time        bigint,
     body        varchar
 );
+
+insert into user_
+values (12345678, 12345678, 'user');
+insert into user_
+values (11111111, 11111111, 'administrator');
+
+insert into post
+values (1, 'apple', 'food', 'a big apple', null, null, null, null, null, 12345678, null, false, false);
+insert into post
+values (2, '桌面截图', '其他', '与其反思自己', 'test.png', 1683739673, 1683739673, 'others', 'computer', '12345678', null, false, false);
+
+select * from post order by post.publish_time;
+
 
 

@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
-public class ImageLoader {
+public class PictureLoader {
 
   public static byte[] loadByte(String imagePath, String extension) {
     byte[] imageData = null;
