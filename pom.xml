@@ -33,19 +33,25 @@
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
-      <version>3.5.3.1</version>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>5.3.10</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid-spring-boot-starter</artifactId>
-      <version>1.2.15</version>
-    </dependency>
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.baomidou</groupId>-->
+<!--      <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--      <version>3.5.3.1</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>com.alibaba</groupId>-->
+<!--      <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--      <version>1.2.15</version>-->
+<!--    </dependency>-->
 
     <dependency>
       <groupId>org.postgresql</groupId>
