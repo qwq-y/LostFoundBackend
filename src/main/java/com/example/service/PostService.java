@@ -20,4 +20,8 @@ public class PostService {
     return postRepository.findAll();
   }
 
+  public List<Post> getPostsOrderByPublishTime() {
+    return postRepository.findPostsOrderByPublishTime();
+  }
+
 }
