@@ -8,6 +8,11 @@ create table user_
     type     varchar
 );
 
+insert into user_
+values (12345678, 12345678, 'user');
+insert into user_
+values (11111111, 11111111, 'administrator');
+
 create table post
 (
     id               bigint primary key,
@@ -20,9 +25,12 @@ create table post
     detailed_place   varchar,
     publisher_id     bigint references user_ (id),
     claimant_id      bigint references user_ (id),
-    is_claimed      bool,
+    is_claimed       bool,
     is_hidden        bool
 );
+
+insert into post
+values (1, 'food', 'apple', null, null, null, null, null, 12345678, null, false, false);
 
 create table feedback
 (
