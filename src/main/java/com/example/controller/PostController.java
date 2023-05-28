@@ -40,6 +40,31 @@ public class PostController {
     return postService.getPostsOrderByPublishTime();
   }
 
+  @GetMapping("/orderByPublishTimeDesc")
+  public List<Post> getPostsOrderByPublishTimeDesc() {
+    return postService.getPostsOrderByPublishTimeDesc();
+  }
+
+  @GetMapping("/orderByItemName")
+  public List<Post> getFindPostsOrderByItemName(String itemName) {
+    return postService.getFindPostsOrderByItemName(itemName);
+  }
+
+  @GetMapping("/orderByDescription")
+  public List<Post> getFindPostsOrderByDescription(String keyword) {
+    return postService.getFindPostsOrderByDescription(keyword);
+  }
+
+  @GetMapping("/selectByPlace")
+  public List<Post> getFindPostsByExactPlace(String place) {
+    return postService.getFindPostsByExactPlace(place);
+  }
+
+  @GetMapping("/selectByType")
+  public List<Post> getFindPostsByExactType(String type) {
+    return postService.getFindPostsByExactType(type);
+  }
+
   @GetMapping("/images/{imageName}")
   public ResponseEntity<byte[]> getImage(@PathVariable String imageName) {
     String imagePath = "C:\\Users\\86188\\Desktop\\CS304\\Pictures\\" + imageName;
