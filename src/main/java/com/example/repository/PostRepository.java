@@ -5,6 +5,7 @@ import com.example.model.Post;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT * FROM post\n" +
             "WHERE post.item_type = :type", nativeQuery = true)
     List<Post> findPostsByExactType(@Param("type") String type);
+
+    // 更新 物品被认领状态 无返回值
+    @Modifying
+    @Query(value = "UPDATE post SET post.claimant_id = :claimantId WHERE post.id = :Id"
+            , nativeQuery = true)
+    void claimPostsById(@Param("Id") String Id, @Param("claimantId") String claimantId);
 
 
 }
