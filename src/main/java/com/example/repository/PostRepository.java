@@ -53,7 +53,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Query(value = "UPDATE post SET claimant_id = :claimantId WHERE post.id = :Id"
             , nativeQuery = true)
-    void claimPostsById(@Param("Id") String Id, @Param("claimantId") String claimantId);
+    void claimPostsById(@Param("Id") Long Id, @Param("claimantId") Long claimantId);
 
+//    @Modifying
+//    @Query(value = "UPDATE post SET item_description = :itemdes WHERE item_name = :itemname"
+//        , nativeQuery = true)
+//    void a(@Param("itemname") String itemName, @Param("itemdes") String itemDescription);
+
+    Post findByItemName(String itemName);
 
 }

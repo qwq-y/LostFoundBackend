@@ -5,10 +5,12 @@ import com.example.repository.PostRepository;
 import com.example.utils.PictureLoader;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -134,13 +136,28 @@ public class PostService {
     }
 
     // 按照 给定物品id和认领者id 更新物品被认领状态 无返回值
-    public ResponseEntity<String> updateClaimPostsById(String Id, String claimantId) {
+    public ResponseEntity<String> updateClaimPostsById(Long Id, Long claimantId) {
+
         try {
             postRepository.claimPostsById(Id, claimantId);
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body("No matched Id");
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body("IllegalArgumentException");
+        }catch (TransactionException e) {
+            return ResponseEntity.badRequest().body("TransactionException");
+        }catch (NullPointerException e){
+            return ResponseEntity.badRequest().body("NullPointerException");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Exception");
         }
         return ResponseEntity.ok().body("Update item successfully");
     }
 
+
+    public void updatePostDescriptionByItemName(String itemName, String itemDescription) {
+        Post post = postRepository.findByItemName(itemName);
+        if (post != null) {
+            post.setItemDescription(itemDescription);
+            postRepository.save(post);
+        }
+    }
 }

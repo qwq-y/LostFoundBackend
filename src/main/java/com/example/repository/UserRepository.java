@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-  @Query(value = "select * from user0", nativeQuery = true)
-  List<User> findAll();
+  User findByStudentId(Long studentId);
 }
