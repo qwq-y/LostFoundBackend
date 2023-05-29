@@ -51,7 +51,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 更新 物品被认领状态 无返回值
     @Modifying
-    @Query(value = "UPDATE post SET post.claimant_id = :claimantId WHERE post.id = :Id"
+    @Query(value = "UPDATE post SET claimant_id = :claimantId WHERE post.id = :Id"
             , nativeQuery = true)
     void claimPostsById(@Param("Id") String Id, @Param("claimantId") String claimantId);
 

@@ -1,9 +1,11 @@
 drop table post cascade;
 drop table feedback cascade;
+drop table user_ cascade;
 
 create table user_
 (
     id       bigint primary key,
+    name     varchar,
     password varchar,
     type     varchar
 );
@@ -34,16 +36,20 @@ create table feedback
 );
 
 insert into user_
-values (12345678, 12345678, 'user');
+values (12345678, '张三', 12345678, 'user');
 insert into user_
-values (11111111, 11111111, 'administrator');
+values (11111111, '李四', 11111111, 'administrator');
 
 insert into post
 values (1, 'apple', 'food', 'a big apple', null, null, null, null, null, 12345678, null, false, false);
 insert into post
-values (2, '桌面截图', '其他', '与其反思自己', 'test.png', 1683739673, 1683739673, 'others', 'computer', '12345678', null, false, false);
+values (2, '桌面截图', '其他', '与其反思自己', 'test.png', 1683739673, 1683739673, 'others', 'computer', '12345678',
+        null, false, false);
 
-select * from post order by post.publish_time;
+select *
+from post
+order by post.publish_time;
+
 
 
 

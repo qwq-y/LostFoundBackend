@@ -78,7 +78,7 @@ public class PostController {
         detailedPlace, publisherId);
   }
 
-  @PostMapping("/{id}/claim")
+  @PostMapping("/claim/{id}/{claimantId}")
   public ResponseEntity<?> claimPost(@PathVariable("id") String id, @RequestParam("claimantId") String claimantId) {
     // 处理通过两个参数更新数据库的逻辑
     return postService.updateClaimPostsById(id, claimantId);

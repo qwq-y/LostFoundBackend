@@ -1,23 +1,24 @@
 package com.example.service;
 
 import com.example.model.Post;
+import com.example.model.User;
 import java.util.List;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class PostServiceTest {
+public class UserServiceTest {
 
   @Autowired
-  private PostService postService;
+  private UserService userService;
 
   @Test
-  void testGetPosts() {
-    List<Post> posts = postService.getPosts();
-    for (Post post : posts) {
-      System.out.println(post);
+  void testGetUsers() {
+    List<User> users = userService.getUsers();
+    for (User u : users) {
+      System.out.println(u);
     }
   }
+
 }
