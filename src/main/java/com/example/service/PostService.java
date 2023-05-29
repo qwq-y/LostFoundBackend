@@ -134,13 +134,13 @@ public class PostService {
     }
 
     // 按照 给定物品id和认领者id 更新物品被认领状态 无返回值
-    public boolean updateClaimPostsById(String Id, String claimantId) {
+    public ResponseEntity<String> updateClaimPostsById(String Id, String claimantId) {
         try {
             postRepository.claimPostsById(Id, claimantId);
         }catch (Exception e) {
-            return ResponseEntity.badRequest().body("No matched Id").hasBody();
+            return ResponseEntity.badRequest().body("No matched Id");
         }
-        return true;
+        return ResponseEntity.ok().body("Update item successfully");
     }
 
 }

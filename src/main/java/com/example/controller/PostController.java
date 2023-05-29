@@ -81,12 +81,7 @@ public class PostController {
   @PostMapping("/{id}/claim")
   public ResponseEntity<?> claimPost(@PathVariable("id") String id, @RequestParam("claimantId") String claimantId) {
     // 处理通过两个参数更新数据库的逻辑
-    boolean success = postService.updateClaimPostsById(id, claimantId);
-    if (success) {
-      return ResponseEntity.ok().build();
-    } else {
-      return ResponseEntity.notFound().build();
-    }
+    return postService.updateClaimPostsById(id, claimantId);
   }
 
 
