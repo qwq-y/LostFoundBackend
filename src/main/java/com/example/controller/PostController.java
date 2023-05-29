@@ -31,7 +31,7 @@ public class PostController {
 
   @GetMapping("/orderByPublishTime")
   public List<Post> getPostsOrderByPublishTime() {
-    return postService.getPostsOrderByPublishTime();
+    return postService.getPostsOrderByPublishTimeAsc();
   }
 
   @GetMapping("/orderByPublishTimeDesc")
@@ -39,23 +39,23 @@ public class PostController {
     return postService.getPostsOrderByPublishTimeDesc();
   }
 
-  @GetMapping("/orderByItemName")
-  public List<Post> getFindPostsOrderByItemName(String itemName) {
-    return postService.getPostsOrderByItemName(itemName);
+  @GetMapping("/likeItemName/{itemName}")
+  public List<Post> getFindPostsLikeItemName(@PathVariable String itemName) {
+    return postService.getPostsLikeItemName(itemName);
   }
 
-  @GetMapping("/orderByDescription")
-  public List<Post> getFindPostsOrderByDescription(String keyword) {
-    return postService.getPostsOrderByDescription(keyword);
+  @GetMapping("/likeDescription/{keyword}")
+  public List<Post> getFindPostsLikeDescription(@PathVariable String keyword) {
+    return postService.getPostsLikeDescription(keyword);
   }
 
-  @GetMapping("/selectByPlace")
-  public List<Post> getFindPostsByExactPlace(String place) {
+  @GetMapping("/selectByPlace/{place}")
+  public List<Post> getFindPostsByExactPlace(@PathVariable String place) {
     return postService.getPostsByExactPlace(place);
   }
 
-  @GetMapping("/selectByType")
-  public List<Post> getFindPostsByExactType(String type) {
+  @GetMapping("/selectByType/{type}")
+  public List<Post> getFindPostsByExactType(@PathVariable String type) {
     return postService.getPostsByExactType(type);
   }
 
@@ -74,7 +74,7 @@ public class PostController {
       @RequestParam("detailedPlace") String detailedPlace,
       @RequestParam("publisherId") Long publisherId
   ) {
-    return postService.uploadPicture(file, itemName, itemType, itemDescription, roughPlace,
+    return postService.uploadPost(file, itemName, itemType, itemDescription, roughPlace,
         detailedPlace, publisherId);
   }
 

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 按照发布时间排序升序
-    @Query(value = "select * from post order by post.publish_time", nativeQuery = true)
-    List<Post> findPostsOrderByPublishTime();
+    @Query(value = "select * from post order by post.publish_time ASC", nativeQuery = true)
+    List<Post> findPostsOrderByPublishTimeAsc();
 
     // 按照发布时间排序降序
     @Query(value = "select * from post order by post.publish_time DESC", nativeQuery = true)
@@ -29,14 +29,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "    WHEN post.item_name LIKE CONCAT('%', :name) THEN 3\n" +
             "    ELSE 4\n" +
             "END;\n", nativeQuery = true)
-    List<Post> findPostsOrderByItemName(@Param("name") String itemName);
+    List<Post> findPostsLikeItemName(@Param("name") String itemName);
 
     // 按照 物品描述 进行匹配，按匹配程度排序
     @Query(value = "SELECT * FROM post\n" +
             "WHERE post.item_description LIKE CONCAT('%', :keyword, '%')\n" +
             "ORDER BY LENGTH(post.item_description) - LENGTH(REPLACE(post.item_description, :keyword, '')) DESC"
             , nativeQuery = true)
-    List<Post> findPostsOrderByDescription(@Param("keyword") String keyword);
+    List<Post> findPostsLikeDescription(@Param("keyword") String keyword);
 
     // 按照 给定地点 选择符合条件的物品
     @Query(value = "SELECT * FROM post\n" +

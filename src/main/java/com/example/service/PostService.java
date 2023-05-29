@@ -32,8 +32,8 @@ public class PostService {
   }
 
   // 按发布时间顺序，升序
-  public List<Post> getPostsOrderByPublishTime() {
-    return postRepository.findPostsOrderByPublishTime();
+  public List<Post> getPostsOrderByPublishTimeAsc() {
+    return postRepository.findPostsOrderByPublishTimeAsc();
   }
 
   public Post createPost(Post post) {
@@ -55,7 +55,7 @@ public class PostService {
     return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
   }
 
-  public ResponseEntity<String> uploadPicture(MultipartFile file, String itemName, String itemType,
+  public ResponseEntity<String> uploadPost(MultipartFile file, String itemName, String itemType,
       String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
     if (!file.isEmpty()) {
       try {
@@ -112,13 +112,13 @@ public class PostService {
   }
 
   // 按物品名称匹配程序搜索排序
-  public List<Post> getPostsOrderByItemName(String itemName) {
-    return postRepository.findPostsOrderByItemName(itemName);
+  public List<Post> getPostsLikeItemName(String itemName) {
+    return postRepository.findPostsLikeItemName(itemName);
   }
 
   // 按物品描述匹配程度搜索排序
-  public List<Post> getPostsOrderByDescription(String keyword) {
-    return postRepository.findPostsOrderByDescription(keyword);
+  public List<Post> getPostsLikeDescription(String keyword) {
+    return postRepository.findPostsLikeDescription(keyword);
   }
 
   // 按照 给定地点 选择符合条件的物品
