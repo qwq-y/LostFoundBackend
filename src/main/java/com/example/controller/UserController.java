@@ -32,19 +32,19 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        try {
-            User createdUser = userService.createUser(user);
-            return new ResponseEntity<>("User created successfully", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to create user", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<String> createUser(
+        @RequestParam Long studentId,
+        @RequestParam String name,
+        @RequestParam String password,
+        @RequestParam String type
+    ) {
+        return userService.createUser(studentId, name, password, type);
     }
 
     @PutMapping("/updateNameByStudentId")
     public ResponseEntity<String> updateNameByStudentId(
-        @RequestParam Long studentId,
-        @RequestParam String name
+        @RequestParam("studentId") Long studentId,
+        @RequestParam("name") String name
     ) {
         return userService.updateNameByStudentId(studentId, name);
     }

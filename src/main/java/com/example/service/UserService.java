@@ -22,20 +22,29 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public User createUser(User user) {
-    return userRepository.save(user);
-  }
-
   public ResponseEntity<String> updateNameByStudentId(Long studentId, String name) {
     User user = userRepository.findByStudentId(studentId);
     if (user != null) {
       user.setName(name);
       userRepository.save(user);
-      return ResponseEntity.ok("successful");
+      return ResponseEntity.ok("successfully updated user name");
     } else {
       return ResponseEntity.badRequest().body("user not found");
     }
   }
 
+  public ResponseEntity<String> createUser(Long studentId, String name, String password, String type) {
+    try {
+      User user = new User();
+      user.setStudentId(studentId);
+      user.setName(name);
+      user.setPassword(password);
+      user.setType(type);
+      userRepository.save(user);
+      return ResponseEntity.ok("successfully inserted user");
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("insert user exception");
+    }
+  }
 
 }

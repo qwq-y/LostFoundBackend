@@ -136,20 +136,12 @@ public class PostService {
     }
 
     // 按照 给定物品id和认领者id 更新物品被认领状态 无返回值
-    public ResponseEntity<String> updateClaimPostsById(Long Id, Long claimantId) {
-
-        try {
-            postRepository.claimPostsById(Id, claimantId);
-        } catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().body("IllegalArgumentException");
-        }catch (TransactionException e) {
-            return ResponseEntity.badRequest().body("TransactionException");
-        }catch (NullPointerException e){
-            return ResponseEntity.badRequest().body("NullPointerException");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body("Exception");
+    public void updateClaimPostsById(Long id,Long claimant_id) {
+        Post post = postRepository.findByIdNew(id);
+        if (post != null) {
+            post.setClaimantId(claimant_id);
+            postRepository.save(post);
         }
-        return ResponseEntity.ok().body("Update item successfully");
     }
 
 

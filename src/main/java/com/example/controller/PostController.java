@@ -85,11 +85,11 @@ public class PostController {
         detailedPlace, publisherId);
   }
 
-  @PostMapping("/claim")
-  public ResponseEntity<?> claimPost(@RequestParam("id") Long id, @RequestParam("claimantId") Long claimantId) {
-    // 处理通过两个参数更新数据库的逻辑
-    return postService.updateClaimPostsById(id, claimantId);
-  }
+//  @PostMapping("/claim")
+//  public ResponseEntity<?> claimPost(@RequestParam("id") Long id, @RequestParam("claimantId") Long claimantId) {
+//    // 处理通过两个参数更新数据库的逻辑
+//    return postService.updateClaimPostsById(id, claimantId);
+//  }
 
   @PostMapping("/pictures/uploadPicture")
   public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
@@ -121,7 +121,16 @@ public class PostController {
     }
   }
 
+  @PutMapping("/claim/{id}")
+  public void claimPost(
+      @PathVariable("id") Long id,
+      @RequestParam("claimantId") Long claimantId
+  ) {
+    // 处理通过两个参数更新数据库的逻辑
+    postService.updateClaimPostsById(id, claimantId);
+  }
 
+  // 测试用
   @PutMapping("/test/{itemName}")
   public void updatePostDescriptionByItemName(
       @PathVariable String itemName,

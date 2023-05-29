@@ -13,4 +13,8 @@ public class FeedbackService {
   public FeedbackService(FeedbackRepository feedbackRepository) {
     this.feedbackRepository = feedbackRepository;
   }
+
+  public void updateInsertNew(Long reportId, Long time, String body) {
+    feedbackRepository.insertNew(reportId, time, body);
+  }
 }
