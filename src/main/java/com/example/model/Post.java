@@ -1,5 +1,6 @@
 package com.example.model;
 
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import lombok.Data;
 @Entity
 public class Post {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String itemName;
   private String itemType;

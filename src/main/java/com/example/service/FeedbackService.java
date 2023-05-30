@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.repository.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,8 @@ public class FeedbackService {
     this.feedbackRepository = feedbackRepository;
   }
 
-  public void updateInsertNew(Long reportId, Long time, String body) {
-    feedbackRepository.insertNew(reportId, time, body);
-  }
+//  public ResponseEntity<String> createFeedback() {
+//
+//  }
+
 }

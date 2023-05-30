@@ -1,18 +1,21 @@
 drop table post cascade;
 drop table feedback cascade;
-drop table user_ cascade;
+drop table user0 cascade;
+truncate table user0 cascade;
 
-create table user_
+create table user0
 (
-    id       bigint primary key,
-    name     varchar,
-    password varchar,
-    type     varchar
+    id         bigserial primary key,
+    student_id bigint unique,
+    name       varchar,
+    password   varchar,
+    type       varchar
 );
+
 
 create table post
 (
-    id               bigint primary key,
+    id               bigserial primary key,
     item_name        varchar,
     item_type        varchar,
     item_description varchar,
@@ -21,34 +24,97 @@ create table post
     claim_time       bigint,
     rough_place      varchar,
     detailed_place   varchar,
-    publisher_id     bigint references user_ (id),
-    claimant_id      bigint references user_ (id),
+    publisher_id     bigint references user0 (student_id),
+    claimant_id      bigint references user0 (student_id),
     is_claimed       bool,
     is_hidden        bool
 );
 
 create table feedback
 (
-    id          bigint primary key,
-    reporter_id bigint references user_ (id),
+    id          bigserial primary key,
+    reporter_id bigint references user0 (student_id),
     time        bigint,
     body        varchar
 );
 
-insert into user_
-values (12345678, '张三', 12345678, 'user');
-insert into user_
-values (11111111, '李四', 11111111, 'administrator');
+insert into user0 (student_id, name, password, type)
+values (11192345, '小刘', 12345678, 'user');
+insert into user0 (student_id, name, password, type)
+values (12345678, '李四', 11111111, 'administrator');
+insert into user0(student_id,name,password,type)
+values(11122345,'王五','12345678','user');
+insert into user0(student_id,name,password,type)
+values(12010308,'小明','12345678','user');
+insert into user0(student_id,name,password,type)
+values(12010324,'小美','12345678','user');
+insert into user0(student_id,name,password,type)
+values(12012403,'小王','12345678','user');
+insert into user0(student_id,name,password,type)
+values(12010302,'小陈','12010302','administrator');
+insert into user0(student_id,name,password,type)
+values(11435142,'小汪','12345678','user');
 
-insert into post
-values (1, 'apple', 'food', 'a big apple', null, null, null, null, null, 12345678, null, false, false);
-insert into post
-values (2, '桌面截图', '其他', '与其反思自己', 'test.png', 1683739673, 1683739673, 'others', 'computer', '12345678',
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( 'apple', 'food', 'a big apple', null, null, null, null, null, 11111111, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ('桌面截图', '其他', '与其反思自己', 'test.png', 1683739673, 1683739673, 'others', 'computer', 12345678,
         null, false, false);
 
 select *
 from post
 order by post.publish_time;
+
+UPDATE post
+SET claimant_id = 12345678
+WHERE post.id = 1;
+
+select *
+from user0;
+UPDATE post
+SET claimant_id = 11111111
+WHERE post.id = '2';
+
+create table test
+(
+    id         BIGSERIAL PRIMARY KEY,
+    student_id bigint unique
+);
+
+UPDATE post SET item_description = ? WHERE post.item_name = 'apple';
+
+UPDATE post SET claimant_id = ? WHERE post.id = ?;
+
+UPDATE post SET item_description = :itemdes WHERE item_name = :itemname;
+
+insert into post
+values (3, '华为手机', '电子产品', '全面屏，紫色壁纸，没有手机壳', 'phone1.jpg', 1479928258, null, '一丹', '二楼前台', 12345678, null, false, false);
+
+insert into post
+values (4, '三星手机', '电子产品', '非全面屏，带触控笔，黑色', 'phone2.jpg', 1296764202, null, '琳恩', '一楼前台', 11435142, null, false, false);
+
+insert into post
+values (5, 'ipad', '电子产品', '黑色，十分新', 'ipad1.jpg', 1375953809, null, '风雨操场', '管理员处', 12010302, null, false, false);
+
+insert into post
+values (6, 'ipad', '电子产品', '白色', 'ipad2.jpg', 1464709853, null, '一教', '二楼打印机处', 12012403, null, false, false);
+
+insert into post
+values (7, '书包', '书籍文具', '红色双肩包', 'bag1.jpg', 1373306296, null, '一教', '404', 12010324, null, false, false);
+
+insert into post
+values (8, '书包', '书籍文具', '绿色双肩包', 'bag2.jpg', 1390933774, null, '三教', '108对面教室管理处', 12010308, null, false, false);
+
+insert into post
+values (9, '水杯', '日用品', '黄色双盖', '水杯1.jpg', 1345899092, null, '涵泳', '一楼饮水机处', 11112345, null, false, false);
+
+insert into post
+values (10, '水杯', '日用品', '绿色包裹半个瓶身', '水杯2.jpg', 1430753768, null, '一丹', '四楼饮水机处', 11192345, null, false, false);
+
+
+
+
+
 
 
 
