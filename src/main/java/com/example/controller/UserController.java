@@ -41,13 +41,13 @@ public class UserController {
         return userService.createUser(studentId, name, password, type);
     }
 
-    @PutMapping("/updateNameByStudentId")
-    public ResponseEntity<String> updateNameByStudentId(
+    @PutMapping("/updatePasswordByStudentId")
+    public ResponseEntity<String> updatePasswordByStudentId(
         @RequestParam("studentId") Long studentId,
-        @RequestParam("name") String name
+        @RequestParam("passwordOld") String passwordOld,
+        @RequestParam("passwordOld") String passwordNew
     ) {
-        return userService.updateNameByStudentId(studentId, name);
+        return userService.updatePasswordByStudentId(studentId, passwordOld,passwordNew);
     }
-
 
 }

@@ -59,6 +59,29 @@ public class PostService {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 
+    // 新建一个帖子（不包含图片）
+    public Post createPost(String itemName, String itemType,
+        String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
+        Post post = new Post();
+        post.setItemName(itemName);
+        post.setItemType(itemType);
+        post.setItemDescription(itemDescription);
+        post.setPicture(null);
+        post.setPublishTime(System.currentTimeMillis());
+        post.setClaimTime(null);
+        post.setRoughPlace(roughPlace);
+        post.setDetailedPlace(detailedPlace);
+        post.setPublisherId(publisherId);
+        post.setClaimantId(null);
+        post.setIsClaimed(false);
+        post.setIsHidden(false);
+
+        createPost(post);
+
+        return post;
+    }
+
+    // 新建一个帖子（包含图片）（测试未通过）
     public ResponseEntity<String> uploadPost(MultipartFile file, String itemName, String itemType,
                                              String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
         if (!file.isEmpty()) {
@@ -144,7 +167,7 @@ public class PostService {
         }
     }
 
-
+    // 测试用
     public void updatePostDescriptionByItemName(String itemName, String itemDescription) {
         Post post = postRepository.findByItemName(itemName);
         if (post != null) {

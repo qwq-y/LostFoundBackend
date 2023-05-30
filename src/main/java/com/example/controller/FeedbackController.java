@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,13 @@ public class FeedbackController {
     this.feedbackService = feedbackService;
   }
 
-  @PostMapping("/insert/{reportId}")
-  public void updatePostDescriptionByItemName(
-      @PathVariable Long reportId,
+  @PostMapping
+  public ResponseEntity<String> createUser(
+      @RequestParam Long reporterId,
       @RequestParam Long time,
       @RequestParam String body
   ) {
-    feedbackService.updateInsertNew(reportId, time, body);
+    return feedbackService.createFeedback(reporterId, time, body);
   }
+
 }

@@ -22,12 +22,16 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public ResponseEntity<String> updateNameByStudentId(Long studentId, String name) {
+  public ResponseEntity<String> updatePasswordByStudentId(Long studentId, String passwordOld, String passwordNew) {
     User user = userRepository.findByStudentId(studentId);
     if (user != null) {
-      user.setName(name);
-      userRepository.save(user);
-      return ResponseEntity.ok("successfully updated user name");
+      if(user.getPassword().equals(passwordOld)) {
+        user.setPassword(passwordNew);
+        userRepository.save(user);
+        return ResponseEntity.ok("successfully updated user password");
+      }else {
+        return ResponseEntity.badRequest().body("password not correct");
+      }
     } else {
       return ResponseEntity.badRequest().body("user not found");
     }
@@ -42,6 +46,7 @@ public class UserService {
       user.setType(type);
       userRepository.save(user);
       return ResponseEntity.ok("successfully inserted user");
+
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("insert user exception");
     }

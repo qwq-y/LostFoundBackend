@@ -71,6 +71,7 @@ public class PostController {
     return postService.getPicture(picture);
   }
 
+  // 上传帖子（包含图片） 测试未通过！！！
   @PostMapping("/pictures/uploadPost")
   public ResponseEntity<String> uploadPost(
       @RequestParam("picture") MultipartFile file,
@@ -85,12 +86,49 @@ public class PostController {
         detailedPlace, publisherId);
   }
 
-//  @PostMapping("/claim")
-//  public ResponseEntity<?> claimPost(@RequestParam("id") Long id, @RequestParam("claimantId") Long claimantId) {
-//    // 处理通过两个参数更新数据库的逻辑
-//    return postService.updateClaimPostsById(id, claimantId);
-//  }
+  @PostMapping("/pictures/uploadPostWithoutPicture")
+  public Post uploadPost(
+      @RequestParam("itemName") String itemName,
+      @RequestParam("itemType") String itemType,
+      @RequestParam("itemDescription") String itemDescription,
+      @RequestParam("roughPlace") String roughPlace,
+      @RequestParam("detailedPlace") String detailedPlace,
+      @RequestParam("publisherId") Long publisherId
+  ) {
+    return postService.createPost(itemName, itemType, itemDescription, roughPlace,
+        detailedPlace, publisherId);
+  }
 
+
+
+  /**
+   * 上传图片（参数为微信生成的临时路径），前端对应代码如下：
+   *   uploadImage: function () {
+   *     // 选择图片并上传
+   *     wx.chooseImage({
+   *       count: 1, // 最多可以选择的图片张数
+   *       success: function (res) {
+   *         // 获取选择的图片临时路径
+   *         var tempFilePath = res.tempFilePaths[0];
+   *
+   *         // 发送图片给后端
+   *         wx.uploadFile({
+   *           url: 'http://10.25.6.55:80/posts/pictures/uploadPicture',  // 替换为你的后端接口地址
+   *           filePath: tempFilePath,
+   *           name: 'image',  // 后端接收图片的字段名
+   *           success: function (res) {
+   *             // 图片上传成功后的处理
+   *             console.log(res.data);
+   *           },
+   *           fail: function (res) {
+   *             // 图片上传失败的处理
+   *             console.log(res.errMsg);
+   *           }
+   *         });
+   *       }
+   *     });
+   *   },
+   */
   @PostMapping("/pictures/uploadPicture")
   public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
     if (!file.isEmpty()) {
@@ -110,6 +148,8 @@ public class PostController {
         // 将文件保存到指定路径
         File saveFile = new File(savePath);
         FileCopyUtils.copy(file.getBytes(), saveFile);
+
+        System.out.println("============>" + file);
 
         return ResponseEntity.ok("File uploaded successfully");
       } catch (Exception e) {
