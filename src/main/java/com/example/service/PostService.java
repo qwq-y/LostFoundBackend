@@ -59,20 +59,21 @@ public class PostService {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 
-    // 新建一个帖子（不包含图片）
+    // 新建一个帖子（不包含图片）（测试未通过）
     public Post createPost(String itemName, String itemType,
         String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
         Post post = new Post();
         post.setItemName(itemName);
         post.setItemType(itemType);
         post.setItemDescription(itemDescription);
-        post.setPicture(null);
-        post.setPublishTime(System.currentTimeMillis());
-        post.setClaimTime(null);
+//        post.setPicture(null);
+        Long time = System.currentTimeMillis();
+        post.setPublishTime(time);
+//        post.setClaimTime(null);
         post.setRoughPlace(roughPlace);
         post.setDetailedPlace(detailedPlace);
         post.setPublisherId(publisherId);
-        post.setClaimantId(null);
+//        post.setClaimantId(null);
         post.setIsClaimed(false);
         post.setIsHidden(false);
 
@@ -80,6 +81,8 @@ public class PostService {
 
         return post;
     }
+
+    // 新建一个帖子（不包含图片）（全部参数）
 
     // 新建一个帖子（包含图片）（测试未通过）
     public ResponseEntity<String> uploadPost(MultipartFile file, String itemName, String itemType,
@@ -159,10 +162,11 @@ public class PostService {
     }
 
     // 按照 给定物品id和认领者id 更新物品被认领状态 无返回值
-    public void updateClaimPostsById(Long id,Long claimant_id) {
+    public void updateClaimPostsById(Long id,Long claimant_id,Long claimant_time) {
         Post post = postRepository.findByIdNew(id);
         if (post != null) {
             post.setClaimantId(claimant_id);
+            post.setClaimTime(claimant_time);
             postRepository.save(post);
         }
     }

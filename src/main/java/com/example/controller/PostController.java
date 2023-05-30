@@ -71,20 +71,20 @@ public class PostController {
     return postService.getPicture(picture);
   }
 
-  // 上传帖子（包含图片） 测试未通过！！！
-  @PostMapping("/pictures/uploadPost")
-  public ResponseEntity<String> uploadPost(
-      @RequestParam("picture") MultipartFile file,
-      @RequestParam("itemName") String itemName,
-      @RequestParam("itemType") String itemType,
-      @RequestParam("itemDescription") String itemDescription,
-      @RequestParam("roughPlace") String roughPlace,
-      @RequestParam("detailedPlace") String detailedPlace,
-      @RequestParam("publisherId") Long publisherId
-  ) {
-    return postService.uploadPost(file, itemName, itemType, itemDescription, roughPlace,
-        detailedPlace, publisherId);
-  }
+//  // 上传帖子（包含图片） 测试未通过！！！
+//  @PostMapping("/pictures/uploadPost")
+//  public ResponseEntity<String> uploadPost(
+//      @RequestParam("picture") MultipartFile file,
+//      @RequestParam("itemName") String itemName,
+//      @RequestParam("itemType") String itemType,
+//      @RequestParam("itemDescription") String itemDescription,
+//      @RequestParam("roughPlace") String roughPlace,
+//      @RequestParam("detailedPlace") String detailedPlace,
+//      @RequestParam("publisherId") Long publisherId
+//  ) {
+//    return postService.uploadPost(file, itemName, itemType, itemDescription, roughPlace,
+//        detailedPlace, publisherId);
+//  }
 
   @PostMapping("/pictures/uploadPostWithoutPicture")
   public Post uploadPost(
@@ -98,7 +98,6 @@ public class PostController {
     return postService.createPost(itemName, itemType, itemDescription, roughPlace,
         detailedPlace, publisherId);
   }
-
 
 
   /**
@@ -164,10 +163,11 @@ public class PostController {
   @PutMapping("/claim/{id}")
   public void claimPost(
       @PathVariable("id") Long id,
-      @RequestParam("claimantId") Long claimantId
+      @RequestParam("claimantId") Long claimantId,
+      @RequestParam("claimantTime") Long claimantTime
   ) {
     // 处理通过两个参数更新数据库的逻辑
-    postService.updateClaimPostsById(id, claimantId);
+    postService.updateClaimPostsById(id, claimantId, claimantTime);
   }
 
   // 测试用

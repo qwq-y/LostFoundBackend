@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-  User findByStudentId(Long studentId);
+//  @Query(value = "SELECT * from user0 where user0.student_id = :studentId", nativeQuery = true)
+//  User findByStudentIdNew(Long studentId);
 
+    User findByStudentId(Long studentId);
 }

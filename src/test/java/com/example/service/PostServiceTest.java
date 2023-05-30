@@ -20,4 +20,10 @@ public class PostServiceTest {
       System.out.println(post);
     }
   }
+
+  @Test
+  void testCreatePost() {
+    Post post = postService.createPost("a", "食物", "b", "其他", "c", 11111111L);
+    System.out.println(post);
+  }
 }

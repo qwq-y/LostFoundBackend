@@ -45,7 +45,7 @@ public class UserController {
     public ResponseEntity<String> updatePasswordByStudentId(
         @RequestParam("studentId") Long studentId,
         @RequestParam("passwordOld") String passwordOld,
-        @RequestParam("passwordOld") String passwordNew
+        @RequestParam("passwordNew") String passwordNew
     ) {
         return userService.updatePasswordByStudentId(studentId, passwordOld,passwordNew);
     }

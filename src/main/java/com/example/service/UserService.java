@@ -29,7 +29,7 @@ public class UserService {
         user.setPassword(passwordNew);
         userRepository.save(user);
         return ResponseEntity.ok("successfully updated user password");
-      }else {
+      } else {
         return ResponseEntity.badRequest().body("password not correct");
       }
     } else {
