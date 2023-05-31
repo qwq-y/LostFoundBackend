@@ -102,7 +102,7 @@ public class PostController {
 
   // 根据id传图片，image参数为微信生成的临时路径
   @PostMapping("/addPicture")
-  public ResponseEntity<String> addPictureById(
+  public Post addPictureById(
       @RequestParam("id") Long id,
       @RequestParam("picture") MultipartFile file
   ) {
@@ -169,16 +169,16 @@ public class PostController {
 //      return ResponseEntity.badRequest().body("No file uploaded");
 //    }
 //  }
-//
-//  @PutMapping("/claim/{id}")
-//  public void claimPost(
-//      @PathVariable("id") Long id,
-//      @RequestParam("claimantId") Long claimantId,
-//      @RequestParam("claimantTime") Long claimantTime
-//  ) {
-//    // 处理通过两个参数更新数据库的逻辑
-//    postService.updateClaimPostsById(id, claimantId, claimantTime);
-//  }
+
+  @PutMapping("/claim/{id}")
+  public void claimPost(
+      @PathVariable("id") Long id,
+      @RequestParam("claimantId") Long claimantId,
+      @RequestParam("claimantTime") Long claimantTime
+  ) {
+    // 处理通过两个参数更新数据库的逻辑
+    postService.updateClaimPostsById(id, claimantId, claimantTime);
+  }
 
   // 测试用
   @PutMapping("/test/{itemName}")

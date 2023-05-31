@@ -83,7 +83,7 @@ public class PostService {
         return post;
     }
 
-    public ResponseEntity<String> addPictureById(Long id, MultipartFile file) {
+    public Post addPictureById(Long id, MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 // 获取上传文件的原始文件名
@@ -102,15 +102,17 @@ public class PostService {
                 File saveFile = new File(savePath);
                 FileCopyUtils.copy(file.getBytes(), saveFile);
 
-                updatePictureById(id, uniqueFileName);
+                return updatePictureById(id, uniqueFileName);
 
-                return ResponseEntity.ok("File uploaded successfully");
+//                return ResponseEntity.ok("File uploaded successfully");
             } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to upload file");
+                return null;
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body("Failed to upload file");
             }
         } else {
-            return ResponseEntity.badRequest().body("No file uploaded");
+            return null;
+//            return ResponseEntity.badRequest().body("No file uploaded");
         }
     }
 
@@ -197,16 +199,18 @@ public class PostService {
         if (post != null) {
             post.setClaimantId(claimant_id);
             post.setClaimTime(claimant_time);
+            post.setIsClaimed(true);
             postRepository.save(post);
         }
     }
 
-    public void updatePictureById(Long id, String picture) {
+    public Post updatePictureById(Long id, String picture) {
         Post post = postRepository.findByIdNew(id);
         if (post != null) {
             post.setPicture(picture);
             postRepository.save(post);
         }
+        return post;
     }
 
 
