@@ -86,7 +86,7 @@ public class PostController {
 //        detailedPlace, publisherId);
 //  }
 
-  @PostMapping("/pictures/uploadPostWithoutPicture")
+  @PostMapping("/uploadPostWithoutPicture")
   public Post uploadPost(
       @RequestParam("itemName") String itemName,
       @RequestParam("itemType") String itemType,
@@ -128,7 +128,7 @@ public class PostController {
    *     });
    *   },
    */
-  @PostMapping("/pictures/uploadPicture")
+  @PostMapping("/uploadPicture")
   public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
     if (!file.isEmpty()) {
       try {

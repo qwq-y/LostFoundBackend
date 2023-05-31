@@ -4,6 +4,7 @@ import com.example.model.Post;
 import com.example.model.User;
 import com.example.repository.UserRepository;
 import java.util.List;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,16 @@ public class UserService {
 
     } catch (Exception e) {
       return ResponseEntity.badRequest().body("insert user exception");
+    }
+  }
+
+  public ResponseEntity<String> login(Long studentId, String password) {
+    try {
+      User user = userRepository.findByStudentId(studentId);
+      assert password.equals(user.getPassword());
+      return ResponseEntity.ok("login successfully");
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body("login failed");
     }
   }
 

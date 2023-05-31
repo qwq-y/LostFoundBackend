@@ -50,4 +50,12 @@ public class UserController {
         return userService.updatePasswordByStudentId(studentId, passwordOld,passwordNew);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<String> login(
+        @RequestParam Long studentId,
+        @RequestParam String password
+    ) {
+        return userService.login(studentId, password);
+    }
+
 }
