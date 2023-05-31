@@ -27,4 +27,5 @@ public class Post {
   private Long claimantId;
   private Boolean isClaimed;
   private Boolean isHidden;
+
 }

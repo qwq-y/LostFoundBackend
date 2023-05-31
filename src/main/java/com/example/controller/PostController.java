@@ -100,9 +100,9 @@ public class PostController {
         detailedPlace, publisherId);
   }
 
-  // 根据id传图片，image参数为微信生成的临时路径
+  // 根据id传图片，image参数为微信生成的临时路径，返回图片名
   @PostMapping("/addPicture")
-  public Post addPictureById(
+  public String addPictureById(
       @RequestParam("id") Long id,
       @RequestParam("picture") MultipartFile file
   ) {

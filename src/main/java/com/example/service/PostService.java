@@ -83,7 +83,7 @@ public class PostService {
         return post;
     }
 
-    public Post addPictureById(Long id, MultipartFile file) {
+    public String addPictureById(Long id, MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 // 获取上传文件的原始文件名
@@ -102,16 +102,18 @@ public class PostService {
                 File saveFile = new File(savePath);
                 FileCopyUtils.copy(file.getBytes(), saveFile);
 
-                return updatePictureById(id, uniqueFileName);
+                updatePictureById(id, uniqueFileName);
+
+                return uniqueFileName;
 
 //                return ResponseEntity.ok("File uploaded successfully");
             } catch (Exception e) {
-                return null;
+                return "异常";
 //                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 //                    .body("Failed to upload file");
             }
         } else {
-            return null;
+            return "没有收到图片";
 //            return ResponseEntity.badRequest().body("No file uploaded");
         }
     }
