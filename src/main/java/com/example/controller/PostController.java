@@ -86,6 +86,7 @@ public class PostController {
 //        detailedPlace, publisherId);
 //  }
 
+  // 上传帖子的时候，先传除了图片外的其他部分，得到返回的post对象之后，再根据id传图片
   @PostMapping("/uploadPostWithoutPicture")
   public Post uploadPost(
       @RequestParam("itemName") String itemName,
@@ -99,76 +100,85 @@ public class PostController {
         detailedPlace, publisherId);
   }
 
-
-  /**
-   * 上传图片（参数为微信生成的临时路径），前端对应代码如下：
-   *   uploadImage: function () {
-   *     // 选择图片并上传
-   *     wx.chooseImage({
-   *       count: 1, // 最多可以选择的图片张数
-   *       success: function (res) {
-   *         // 获取选择的图片临时路径
-   *         var tempFilePath = res.tempFilePaths[0];
-   *
-   *         // 发送图片给后端
-   *         wx.uploadFile({
-   *           url: 'http://10.25.6.55:80/posts/pictures/uploadPicture',  // 替换为你的后端接口地址
-   *           filePath: tempFilePath,
-   *           name: 'image',  // 后端接收图片的字段名
-   *           success: function (res) {
-   *             // 图片上传成功后的处理
-   *             console.log(res.data);
-   *           },
-   *           fail: function (res) {
-   *             // 图片上传失败的处理
-   *             console.log(res.errMsg);
-   *           }
-   *         });
-   *       }
-   *     });
-   *   },
-   */
-  @PostMapping("/uploadPicture")
-  public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
-    if (!file.isEmpty()) {
-      try {
-        // 获取上传文件的原始文件名
-        String originalFilename = file.getOriginalFilename();
-
-        // 获取文件扩展名
-        String fileExtension = StringUtils.getFilenameExtension(originalFilename);
-
-        // 生成唯一的文件名
-        String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
-
-        // 拼接保存路径
-        String savePath = "C:\\Users\\86188\\Desktop\\CS304\\Pictures\\" + uniqueFileName;
-
-        // 将文件保存到指定路径
-        File saveFile = new File(savePath);
-        FileCopyUtils.copy(file.getBytes(), saveFile);
-
-        System.out.println("============>" + file);
-
-        return ResponseEntity.ok("File uploaded successfully");
-      } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body("Failed to upload file");
-      }
-    } else {
-      return ResponseEntity.badRequest().body("No file uploaded");
-    }
-  }
-
-  @PutMapping("/claim/{id}")
-  public void claimPost(
-      @PathVariable("id") Long id,
-      @RequestParam("claimantId") Long claimantId,
-      @RequestParam("claimantTime") Long claimantTime
+  // 根据id传图片，image参数为微信生成的临时路径
+  @PostMapping("/addPicture")
+  public ResponseEntity<String> addPictureById(
+      @RequestParam("id") Long id,
+      @RequestParam("picture") MultipartFile file
   ) {
-    // 处理通过两个参数更新数据库的逻辑
-    postService.updateClaimPostsById(id, claimantId, claimantTime);
+    return postService.addPictureById(id, file);
   }
+
+
+//  /**
+//   * 上传图片（参数为微信生成的临时路径），前端对应代码如下：
+//   *   uploadImage: function () {
+//   *     // 选择图片并上传
+//   *     wx.chooseImage({
+//   *       count: 1, // 最多可以选择的图片张数
+//   *       success: function (res) {
+//   *         // 获取选择的图片临时路径
+//   *         var tempFilePath = res.tempFilePaths[0];
+//   *
+//   *         // 发送图片给后端
+//   *         wx.uploadFile({
+//   *           url: 'http://10.25.6.55:80/posts/pictures/uploadPicture',  // 替换为你的后端接口地址
+//   *           filePath: tempFilePath,
+//   *           name: 'image',  // 后端接收图片的字段名
+//   *           success: function (res) {
+//   *             // 图片上传成功后的处理
+//   *             console.log(res.data);
+//   *           },
+//   *           fail: function (res) {
+//   *             // 图片上传失败的处理
+//   *             console.log(res.errMsg);
+//   *           }
+//   *         });
+//   *       }
+//   *     });
+//   *   },
+//   */
+//  @PostMapping("/uploadPicture")
+//  public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
+//    if (!file.isEmpty()) {
+//      try {
+//        // 获取上传文件的原始文件名
+//        String originalFilename = file.getOriginalFilename();
+//
+//        // 获取文件扩展名
+//        String fileExtension = StringUtils.getFilenameExtension(originalFilename);
+//
+//        // 生成唯一的文件名
+//        String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
+//
+//        // 拼接保存路径
+//        String savePath = "C:\\Users\\86188\\Desktop\\CS304\\Pictures\\" + uniqueFileName;
+//
+//        // 将文件保存到指定路径
+//        File saveFile = new File(savePath);
+//        FileCopyUtils.copy(file.getBytes(), saveFile);
+//
+//        System.out.println("============>" + file);
+//
+//        return ResponseEntity.ok("File uploaded successfully");
+//      } catch (Exception e) {
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//            .body("Failed to upload file");
+//      }
+//    } else {
+//      return ResponseEntity.badRequest().body("No file uploaded");
+//    }
+//  }
+//
+//  @PutMapping("/claim/{id}")
+//  public void claimPost(
+//      @PathVariable("id") Long id,
+//      @RequestParam("claimantId") Long claimantId,
+//      @RequestParam("claimantTime") Long claimantTime
+//  ) {
+//    // 处理通过两个参数更新数据库的逻辑
+//    postService.updateClaimPostsById(id, claimantId, claimantTime);
+//  }
 
   // 测试用
   @PutMapping("/test/{itemName}")

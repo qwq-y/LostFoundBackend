@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -59,7 +60,7 @@ public class PostService {
         return new ResponseEntity<>(imageData, headers, HttpStatus.OK);
     }
 
-    // 新建一个帖子（不包含图片）（测试未通过）
+    // 新建一个帖子（不包含图片）
     public Post createPost(String itemName, String itemType,
         String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
         Post post = new Post();
@@ -82,11 +83,7 @@ public class PostService {
         return post;
     }
 
-    // 新建一个帖子（不包含图片）（全部参数）
-
-    // 新建一个帖子（包含图片）（测试未通过）
-    public ResponseEntity<String> uploadPost(MultipartFile file, String itemName, String itemType,
-                                             String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
+    public ResponseEntity<String> addPictureById(Long id, MultipartFile file) {
         if (!file.isEmpty()) {
             try {
                 // 获取上传文件的原始文件名
@@ -105,36 +102,69 @@ public class PostService {
                 File saveFile = new File(savePath);
                 FileCopyUtils.copy(file.getBytes(), saveFile);
 
-                ResponseEntity<String> responseEntity = ResponseEntity.ok("File uploaded successfully");
+                updatePictureById(id, uniqueFileName);
 
-                if (responseEntity.equals(ResponseEntity.ok("File uploaded successfully"))) {
-                    Post post = new Post();
-                    post.setItemName(itemName);
-                    post.setItemType(itemType);
-                    post.setItemDescription(itemDescription);
-                    post.setPicture(uniqueFileName);
-                    post.setPublishTime(System.currentTimeMillis());
-                    post.setClaimTime(null);
-                    post.setRoughPlace(roughPlace);
-                    post.setDetailedPlace(detailedPlace);
-                    post.setPublisherId(publisherId);
-                    post.setClaimantId(null);
-                    post.setIsClaimed(false);
-                    post.setIsHidden(false);
-
-                    createPost(post);
-                }
-
-                return responseEntity;
-
+                return ResponseEntity.ok("File uploaded successfully");
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Failed to upload file");
+                    .body("Failed to upload file");
             }
         } else {
             return ResponseEntity.badRequest().body("No file uploaded");
         }
     }
+
+//    // 新建一个帖子（包含图片）（测试未通过）
+//    public ResponseEntity<String> uploadPost(MultipartFile file, String itemName, String itemType,
+//                                             String itemDescription, String roughPlace, String detailedPlace, Long publisherId) {
+//        if (!file.isEmpty()) {
+//            try {
+//                // 获取上传文件的原始文件名
+//                String originalFilename = file.getOriginalFilename();
+//
+//                // 获取文件扩展名
+//                String fileExtension = StringUtils.getFilenameExtension(originalFilename);
+//
+//                // 生成唯一的文件名
+//                String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
+//
+//                // 拼接保存路径
+//                String savePath = "C:\\Users\\86188\\Desktop\\CS304\\Pictures\\" + uniqueFileName;
+//
+//                // 将文件保存到指定路径
+//                File saveFile = new File(savePath);
+//                FileCopyUtils.copy(file.getBytes(), saveFile);
+//
+//                ResponseEntity<String> responseEntity = ResponseEntity.ok("File uploaded successfully");
+//
+//                if (responseEntity.equals(ResponseEntity.ok("File uploaded successfully"))) {
+//                    Post post = new Post();
+//                    post.setItemName(itemName);
+//                    post.setItemType(itemType);
+//                    post.setItemDescription(itemDescription);
+//                    post.setPicture(uniqueFileName);
+//                    post.setPublishTime(System.currentTimeMillis());
+//                    post.setClaimTime(null);
+//                    post.setRoughPlace(roughPlace);
+//                    post.setDetailedPlace(detailedPlace);
+//                    post.setPublisherId(publisherId);
+//                    post.setClaimantId(null);
+//                    post.setIsClaimed(false);
+//                    post.setIsHidden(false);
+//
+//                    createPost(post);
+//                }
+//
+//                return responseEntity;
+//
+//            } catch (Exception e) {
+//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                        .body("Failed to upload file");
+//            }
+//        } else {
+//            return ResponseEntity.badRequest().body("No file uploaded");
+//        }
+//    }
 
     // 按发布时间顺序，降序
     public List<Post> getPostsOrderByPublishTimeDesc() {
@@ -170,6 +200,15 @@ public class PostService {
             postRepository.save(post);
         }
     }
+
+    public void updatePictureById(Long id, String picture) {
+        Post post = postRepository.findByIdNew(id);
+        if (post != null) {
+            post.setPicture(picture);
+            postRepository.save(post);
+        }
+    }
+
 
     // 测试用
     public void updatePostDescriptionByItemName(String itemName, String itemDescription) {
