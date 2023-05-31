@@ -87,29 +87,29 @@ UPDATE post SET claimant_id = ? WHERE post.id = ?;
 
 UPDATE post SET item_description = :itemdes WHERE item_name = :itemname;
 
-insert into post
-values (3, '华为手机', '电子产品', '全面屏，紫色壁纸，没有手机壳', 'phone1.jpg', 1479928258, null, '一丹', '二楼前台', 12345678, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ('华为手机', '电子产品', '全面屏，紫色壁纸，没有手机壳', 'phone1.jpg', 1479928258, null, '一丹', '二楼前台', 12345678, null, false, false);
 
-insert into post
-values (4, '三星手机', '电子产品', '非全面屏，带触控笔，黑色', 'phone2.jpg', 1296764202, null, '琳恩', '一楼前台', 11435142, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ('三星手机', '电子产品', '非全面屏，带触控笔，黑色', 'phone2.jpg', 1296764202, null, '琳恩', '一楼前台', 11435142, null, false, false);
 
-insert into post
-values (5, 'ipad', '电子产品', '黑色，十分新', 'ipad1.jpg', 1375953809, null, '风雨操场', '管理员处', 12010302, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( 'ipad', '电子产品', '黑色，十分新', 'ipad1.jpg', 1375953809, null, '风雨操场', '管理员处', 12010302, null, false, false);
 
-insert into post
-values (6, 'ipad', '电子产品', '白色', 'ipad2.jpg', 1464709853, null, '一教', '二楼打印机处', 12012403, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( 'ipad', '电子产品', '白色', 'ipad2.jpg', 1464709853, null, '一教', '二楼打印机处', 12012403, null, false, false);
 
-insert into post
-values (7, '书包', '书籍文具', '红色双肩包', 'bag1.jpg', 1373306296, null, '一教', '404', 12010324, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( '书包', '书籍文具', '红色双肩包', 'bag1.jpg', 1373306296, null, '一教', '404', 12010324, null, false, false);
 
-insert into post
-values (8, '书包', '书籍文具', '绿色双肩包', 'bag2.jpg', 1390933774, null, '三教', '108对面教室管理处', 12010308, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( '书包', '书籍文具', '绿色双肩包', 'bag2.jpg', 1390933774, null, '三教', '108对面教室管理处', 12010308, null, false, false);
 
-insert into post
-values (9, '水杯', '日用品', '黄色双盖', '水杯1.jpg', 1345899092, null, '涵泳', '一楼饮水机处', 11112345, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( '水杯', '日用品', '黄色双盖', '水杯1.jpg', 1345899092, null, '涵泳', '一楼饮水机处', 11192345, null, false, false);
 
-insert into post
-values (10, '水杯', '日用品', '绿色包裹半个瓶身', '水杯2.jpg', 1430753768, null, '一丹', '四楼饮水机处', 11192345, null, false, false);
+insert into post (item_name, item_type, item_description, picture, publish_time, claim_time, rough_place, detailed_place, publisher_id, claimant_id, is_claimed, is_hidden)
+values ( '水杯', '日用品', '绿色包裹半个瓶身', '水杯2.jpg', 1430753768, null, '一丹', '四楼饮水机处', 11192345, null, false, false);
 
 
 
